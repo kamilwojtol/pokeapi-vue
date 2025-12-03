@@ -1,16 +1,18 @@
 <script lang="ts" setup>
 const props = defineProps({
-  title: String,
+  text: String,
   color: String,
   isChecked: Boolean,
+  isCardPill: Boolean,
 });
 </script>
 
 <template>
   <div
     class="rounded-2xl py-1 px-4 h-8 cursor-pointer text-center mr-2 text-white bg-red-400 border-transparent"
+    :style="{ backgroundColor: props.color }"
   >
-    <span>{{ title }}</span>
+    <span>{{ props.text }}</span>
   </div>
 </template>
 
