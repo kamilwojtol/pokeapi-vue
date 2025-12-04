@@ -12,5 +12,13 @@ export interface Pokemon {
   sprites: {
     front_default: string;
   };
+  types: SinglePokemonType[];
   id: number;
+  details: any;
+}
+
+export interface SinglePokemonType {
+  type: {
+    name: string;
+  };
 }

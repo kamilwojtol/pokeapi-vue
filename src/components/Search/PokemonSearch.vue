@@ -2,21 +2,25 @@
 import { ref } from "vue";
 import { InputText } from "primevue";
 
+const emit = defineEmits<{
+  (e: "search", searchValue: string): void;
+}>();
+
 const pokemonSearchValue = ref("");
 
-function getPokemonsByName(event: KeyboardEvent) {
-  setTimeout(() => {}, 500);
+function searchPokemon() {
+  emit("search", pokemonSearchValue.value);
 }
 </script>
 
 <template>
   <InputText
-    class="search-pokemon rounded-2xl border h-8 p-4 text-white"
+    class="search-pokemon rounded-3xl border h-8 p-4 text-white"
     id="search-pokemon"
     type="text"
     placeholder="Search Pokémon..."
     v-model="pokemonSearchValue"
-    @keyup="getPokemonsByName"
+    @keyup="searchPokemon"
   />
 </template>
 
