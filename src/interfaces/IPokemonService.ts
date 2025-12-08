@@ -22,3 +22,8 @@ export interface SinglePokemonType {
     name: string;
   };
 }
+
+export interface CardTypeInfo {
+  colors: string[];
+  names: string[];
+}

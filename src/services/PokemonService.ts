@@ -13,9 +13,14 @@ export async function getPokemonByName(searchQuery: string): Promise<Pokemon> {
   return pokemon;
 }
 
-export async function getAllPokemons(limit: number = 24, offset: number = 24) {
+export async function getAllPokemons(page: number = 1) {
   const pokemons = await getData(
-    `https://pokeapi.co/api/v2/pokemon/?limit=${limit}&offset${offset}`
+    `https://pokeapi.co/api/v2/pokemon/?limit=24&offset=${page * 24}`
   );
+  return pokemons;
+}
+
+export async function getPokemonsByFilter(filter: string) {
+  const pokemons = await getData(`https://pokeapi.co/api/v2/type/${filter}`);
   return pokemons;
 }

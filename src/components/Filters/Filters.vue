@@ -9,6 +9,10 @@ const props = defineProps({
     required: true,
   },
 });
+
+const emit = defineEmits<{
+  (e: "setFilter", filterName: string): void;
+}>();
 </script>
 
 <template>
@@ -17,6 +21,7 @@ const props = defineProps({
       :color="filter.color"
       v-for="filter in filters"
       :text="filter.type"
+      @setFilter="emit('setFilter', filter.type)"
     />
   </section>
 </template>

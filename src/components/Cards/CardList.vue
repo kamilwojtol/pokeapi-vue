@@ -1,9 +1,12 @@
 <script lang="ts" setup>
 import type { PropType } from "vue";
 import PokemonCard from "./PokemonCard.vue";
-import { Button } from "primevue";
 import type { Filter } from "../../interfaces/IFilterService";
-import type { Pokemon } from "../../interfaces/IPokemonService";
+import type {
+  CardTypeInfo,
+  Pokemon,
+  SinglePokemonType,
+} from "../../interfaces/IPokemonService";
 
 const props = defineProps({
   filters: {
@@ -16,26 +19,23 @@ const props = defineProps({
   },
 });
 
-function getCardColors(pokemon: Pokemon): string | undefined {
+function getCardColors(pokemon: Pokemon): CardTypeInfo | undefined {
   if (!pokemon.details) return undefined;
 
-  // Pobranie nazw typów (1 lub 2)
-  const typeNames = pokemon.details.types.map((t) => t.type.name);
+  const typeNames = pokemon.details.types.map(
+    (t: SinglePokemonType) => t.type.name
+  );
 
-  // Znalezienie przypisanych kolorów
   const colors = typeNames
-    .map((type) => props.filters.find((f) => f.type === type)?.color)
+    .map((type: string) => props.filters.find((f) => f.type === type)?.color)
     .filter(Boolean) as string[];
 
-  // Brak kolorów
   if (colors.length === 0) return undefined;
 
-  // Jeden typ → zwykły kolor
-  if (colors.length === 1)
-    return `linear-gradient(to right, ${colors[0]}, ${colors[0]})`;
-
-  // Dwa typy → gradient
-  return `linear-gradient(to right, ${colors[0]}, ${colors[1]})`;
+  return {
+    colors: colors,
+    names: typeNames,
+  };
 }
 </script>
 
@@ -49,12 +49,6 @@ function getCardColors(pokemon: Pokemon): string | undefined {
       :pokemon="pokemon"
     />
   </section>
-  <Button
-    class="bg-blue-600 font-medium text-white p-2 px-6 rounded-3xl cursor-pointer mt-4"
-    severity="info"
-    label="Load more"
-    rounded
-  />
 </template>
 
 <style scoped></style>
